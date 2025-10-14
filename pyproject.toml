@@ -1,0 +1,31 @@
+[project]
+name = "grpo-optuna"
+version = "0.1.0"
+description = "GRPO fine-tuning experiments backed by Optuna hyperparameter search."
+requires-python = ">=3.10"
+dependencies = [
+    "torch",
+    "transformers",
+    "datasets",
+    "optuna",
+    "peft",
+    "trl",
+    "wandb",
+    "pytest>=8.4.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+]
+
+[project.scripts]
+grpo-optuna = "grpo_optuna.cli:main"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
