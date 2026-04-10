@@ -1,7 +1,9 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-Core code lives in `src/grpo_optuna/`. Use `cli.py` for argument parsing and entrypoint flow, `pipeline.py` for training and Optuna orchestration, `data.py` for dataset loading, and `rewards.py` / `text_utils.py` for reward logic and answer parsing. `main.py` is a thin local launcher. Tests live in `tests/`, currently centered on `tests/test_objective.py`. Treat `outputs/` as generated experiment artifacts, not source.
+Core code lives in `src/grpo_optuna/`. Use `cli.py` for argument parsing and entrypoint flow, `pipeline.py` for GRPO training and Optuna orchestration, `data.py` for dataset loading, and `rewards.py` / `text_utils.py` for reward logic and answer parsing. `main.py` is a thin local launcher. Tests live in `tests/`, currently centered on `tests/test_objective.py`. Treat `outputs/` as generated experiment artifacts, not source.
+
+Optuna is the outer search loop in this repo: each trial samples training and reward-shaping hyperparameters, builds the GRPO config and reward functions, runs a GRPO training job, evaluates validation accuracy, and reports that score back to Optuna. Tune-related changes should preserve the distinction between training hyperparameters such as `learning_rate`, `weight_decay`, `warmup_ratio`, and `max_grad_norm`, and reward-shaping hyperparameters such as format, integer-answer, and correctness reward weights or magnitudes. The CLI can optionally enqueue a default initial parameter set as a baseline trial before sampled trials begin.
 
 ## Build, Test, and Development Commands
 Create the environment with `uv venv .venv` and install dependencies with `uv sync`.
