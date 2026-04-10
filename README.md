@@ -9,6 +9,15 @@ uv venv .venv
 uv sync
 ```
 
+## Local `.env`
+
+You can set local Weights & Biases defaults in a `.env` file at the repo root. `main.py` loads it on startup.
+
+```env
+WANDB_PROJECT=my-project
+WANDB_ENTITY=my-team
+```
+
 ## Tests
 
 ```bash
@@ -27,5 +36,19 @@ uv run python main.py \
   --fast-dev-run \
   --report-to none \
   --trials 1 \
+  --no-initial
+```
+
+
+## GSM8K Trial
+
+```bash
+uv run python main.py \
+  --model-name Qwen/Qwen2.5-1.5B-Instruct \
+  --output-dir outputs/Qwen-1.5B-GRPO \
+  --run-name Qwen-1.5B-GRPO-gsm8k \
+  --report-to wandb \
+  --trials 10 \
+  --storage sqlite:///db.sqlite3 \
   --no-initial
 ```
