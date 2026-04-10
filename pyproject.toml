@@ -8,10 +8,12 @@ dependencies = [
     "transformers",
     "datasets",
     "optuna",
+    "python-dotenv",
     "peft",
     "trl",
     "wandb",
     "pytest>=8.4.2",
+    "optuna-dashboard>=0.20.0",
 ]
 
 [project.optional-dependencies]
