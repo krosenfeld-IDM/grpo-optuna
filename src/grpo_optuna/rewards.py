@@ -41,7 +41,7 @@ def strict_format_reward_func(
 ) -> list[float]:
     pattern = r"^<reasoning>\n.*?\n</reasoning>\n<answer>\n.*?\n</answer>\n$"
     responses = [completion[0]["content"] for completion in completions]
-    matches = [re.match(pattern, r) for r in responses]
+    matches = [re.match(pattern, r, re.DOTALL) for r in responses]
     return [strict_match_reward if match else strict_no_match_reward for match in matches]
 
 
@@ -54,7 +54,7 @@ def soft_format_reward_func(
 ) -> list[float]:
     pattern = r"<reasoning>.*?</reasoning>\s*<answer>.*?</answer>"
     responses = [completion[0]["content"] for completion in completions]
-    matches = [re.match(pattern, r) for r in responses]
+    matches = [re.match(pattern, r, re.DOTALL) for r in responses]
     return [soft_match_reward if match else soft_no_match_reward for match in matches]
 
 
